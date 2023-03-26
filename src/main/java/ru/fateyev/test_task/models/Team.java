@@ -1,6 +1,6 @@
 package ru.fateyev.test_task.models;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 import java.util.List;
@@ -12,7 +12,7 @@ public class Team {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @Column(name = "team_name")
     private String teamName;
@@ -36,11 +36,11 @@ public class Team {
         this.foundingDate = foundingDate;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

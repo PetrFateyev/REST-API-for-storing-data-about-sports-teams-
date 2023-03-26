@@ -1,6 +1,6 @@
 package ru.fateyev.test_task.models;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
@@ -11,7 +11,7 @@ public class Player {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @Column(name = "team_number", unique = true)
     private int teamNumber;
@@ -34,7 +34,7 @@ public class Player {
     private String position;
 
     @ManyToOne
-    @JoinColumn(name = "team_id", referencedColumnName = "id")
+    @JoinColumn(name = "team_id", nullable = false, foreignKey = @ForeignKey(name = "FK_PLAYERS_TEAM_ID"))
     private Team team;
 
     public Player() {
@@ -49,11 +49,11 @@ public class Player {
         this.position = position;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
