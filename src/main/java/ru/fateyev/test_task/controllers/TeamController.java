@@ -13,7 +13,6 @@ import ru.fateyev.test_task.services.TeamService;
 import ru.fateyev.test_task.util.ResourceNotCreatedException;
 import ru.fateyev.test_task.util.ResourceErrorResponse;
 import ru.fateyev.test_task.util.ResourceNotFoundException;
-
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,20 +30,20 @@ public class TeamController {
     }
 
     //Метод для получения всех команд
-    @GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Team> getTeams() {
         return teamService.findAll();
     }
 
     //Метод для получения всех команд, с фильтрацией по виду спорта
-    @GetMapping( value = "/{kindsOfSport}", produces = MediaType.APPLICATION_XML_VALUE)
+    @GetMapping( value = "/{kindsOfSport}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Team> getTeamsByKindsOfSport(@PathVariable("kindsOfSport") String kindsOfSport) {
         return teamService.findAllByKindsOfSport(kindsOfSport);
     }
 
     //Метод для получения всех команд, с возможностью получить команды за период, по дате основания
-    @GetMapping(value = "/between", produces = MediaType.APPLICATION_XML_VALUE)
-    public List<Team> getTeamsByFoundingDate(@PathVariable Date startDate, @PathVariable Date endDate) {
+    @GetMapping(value = "/between", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Team> getTeamsByFoundingDate(@RequestParam Date startDate, @RequestParam Date endDate) {
         return teamService.findAllByFoundingDateBetween(startDate, endDate);
     }
 
