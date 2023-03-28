@@ -6,7 +6,7 @@
                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
     <changeSet id="create_table_players" author="petrfateyev">
         <createTable  tableName="players">
-            <column autoIncrement="true" name="id" type="int">
+            <column autoIncrement="true" name="player_id" type="int">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="team_number" type="int">
@@ -27,11 +27,14 @@
             <column name="position" type="varchar(100)">
                 <constraints nullable="false"/>
             </column>
+            <column name="team_id" type="int">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
-        <addForeignKeyConstraint baseColumnNames="id"
+        <addForeignKeyConstraint baseColumnNames="team_id"
                                  baseTableName="players"
                                  constraintName="FK_PLAYERS_TEAM_ID"
-                                 referencedColumnNames="id"
+                                 referencedColumnNames="team_id"
                                  referencedTableName="teams" />
 
     </changeSet>

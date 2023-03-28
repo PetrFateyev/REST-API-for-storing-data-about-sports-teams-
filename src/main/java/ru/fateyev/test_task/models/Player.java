@@ -1,13 +1,8 @@
 package ru.fateyev.test_task.models;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
-
-import com.sun.istack.NotNull;
-import org.springframework.format.annotation.DateTimeFormat;
+import javax.validation.constraints.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
 
 @Entity
@@ -15,12 +10,11 @@ import java.util.Date;
 public class Player {
 
     @Id
-    @Column(name = "id")
+    @Column(name = "player_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "team_number", unique = true)
-    @NotEmpty(message = "Number should not be empty")
     @Min(value = 1, message = "Number should be greater than 1")
     @Max(value = 1000, message = "Number should be less than 1000")
     private int teamNumber;
@@ -42,8 +36,8 @@ public class Player {
 
     @Column(name = "birthday")
     @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    @NotEmpty
+    @PastOrPresent
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date birthday;
 
     @Column(name = "position")

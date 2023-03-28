@@ -2,10 +2,9 @@ package ru.fateyev.test_task.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
-
-import com.sun.istack.NotNull;
-import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +13,7 @@ import java.util.List;
 public class Team {
 
     @Id
-    @Column(name = "id")
+    @Column(name = "team_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
@@ -30,8 +29,8 @@ public class Team {
 
     @Column(name = "founding_date")
     @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    @NotEmpty
+    @PastOrPresent
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date foundingDate;
 
     @OneToMany(mappedBy = "team")
