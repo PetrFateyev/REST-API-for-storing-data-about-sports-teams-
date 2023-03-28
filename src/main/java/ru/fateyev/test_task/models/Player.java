@@ -1,6 +1,12 @@
 package ru.fateyev.test_task.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
+import com.sun.istack.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
@@ -14,23 +20,35 @@ public class Player {
     private int id;
 
     @Column(name = "team_number", unique = true)
+    @NotEmpty(message = "Number should not be empty")
+    @Min(value = 1, message = "Number should be greater than 1")
+    @Max(value = 1000, message = "Number should be less than 1000")
     private int teamNumber;
 
     @Column(name = "surname")
+    @NotEmpty(message = "Surname should not be empty")
+    @Size(min = 2, max = 50, message = "Surname should be between 2 and 50 characters")
     private String surname;
 
     @Column(name = "firstname")
+    @NotEmpty(message = "Firstname should not be empty")
+    @Size(min = 2, max = 50, message = "Firstname should be between 2 and 50 characters")
     private String firstname;
 
     @Column(name = "secondname")
+    @NotEmpty(message = "Secondname should not be empty")
+    @Size(min = 2, max = 50, message = "Secondname should be between 2 and 50 characters")
     private String secondname;
 
     @Column(name = "birthday")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @NotEmpty
     private Date birthday;
 
     @Column(name = "position")
+    @NotEmpty(message = "Position should not be empty")
+    @Size(min = 2, max = 100, message = "Position should be between 2 and 100 characters")
     private String position;
 
     @ManyToOne
