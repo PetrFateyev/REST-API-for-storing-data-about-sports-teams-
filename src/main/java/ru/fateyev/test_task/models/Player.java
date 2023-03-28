@@ -2,6 +2,7 @@ package ru.fateyev.test_task.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
 
@@ -47,6 +48,7 @@ public class Player {
 
     @ManyToOne
     @JoinColumn(name = "team_id", nullable = false, foreignKey = @ForeignKey(name = "FK_PLAYERS_TEAM_ID"))
+    @JsonBackReference
     private Team team;
 
     public Player() {

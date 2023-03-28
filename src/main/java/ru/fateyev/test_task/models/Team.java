@@ -5,6 +5,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.Date;
 import java.util.List;
 
@@ -34,6 +36,7 @@ public class Team {
     private Date foundingDate;
 
     @OneToMany(mappedBy = "team")
+    @JsonManagedReference
     private List<Player> players;
 
     public Team(){}
