@@ -7,11 +7,12 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.fateyev.test_task.models.Player;
 import ru.fateyev.test_task.models.Team;
 import ru.fateyev.test_task.repositories.TeamRepository;
+import ru.fateyev.test_task.util.ResourceNotFoundException;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -49,24 +50,33 @@ public class TeamService {
 
     @Transactional
     public void delete(int id){
+        Optional<Team> team = teamRepository.findById(id);
+        if (!team.isPresent()) {
+            throw new ResourceNotFoundException();
+        }
         teamRepository.deleteById(id);
     }
 
     public List<Player> getPlayersByTeamId(int id) {
         Optional<Team> team = teamRepository.findById(id);
 
-        if (team.isPresent()) {
-            Hibernate.initialize(team.get().getPlayers());
-            return team.get().getPlayers();
+        if (!team.isPresent()) {
+            throw new ResourceNotFoundException();
         }
-        return Collections.emptyList();
+        Hibernate.initialize(team.get().getPlayers());
+        return team.get().getPlayers();
     }
 
-    @Transactional
-    public void addPlayer(int id, Player player){
+    public List<Player> getPlayersByTeamId(int id, String position) {
         Optional<Team> team = teamRepository.findById(id);
 
-        team.get().getPlayers().add(player);
-        teamRepository.save(team.get());
+        if (!team.isPresent()) {
+            throw new ResourceNotFoundException();
+        }
+        Hibernate.initialize(team.get().getPlayers());
+        return team.get().getPlayers()
+                .stream()
+                .filter(player -> player.getPosition().equals(position))
+                .collect(Collectors.toList());
     }
 }
